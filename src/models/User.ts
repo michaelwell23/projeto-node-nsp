@@ -1,16 +1,16 @@
 import { Column, CreateDateColumn, Entity, PrimaryColumn } from 'typeorm';
 import { v4 as uuid } from 'uuid';
 
-@Entity('surveys')
-class Survey {
+@Entity('users')
+class User {
   @PrimaryColumn()
   readonly id: string;
 
   @Column()
-  title: string;
+  name: string;
 
   @Column()
-  description: string;
+  email: string;
 
   @CreateDateColumn()
   created_at: Date;
@@ -22,4 +22,4 @@ class Survey {
   }
 }
 
-export { Survey };
+export { User };
