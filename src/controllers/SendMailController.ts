@@ -9,7 +9,7 @@ import SurveysUsersRepository from '../repositories/SurveysUsersRepository';
 import UsersRepository from '../repositories/UserRepository';
 import SendMailService from '../services/SendMailService';
 
-class SendMailController {
+export default class SendMailController {
   async execute(request: Request, response: Response) {
     const { email, survey_id } = request.body;
     console.log(email);
@@ -53,14 +53,12 @@ class SendMailController {
       return response.json(surveyUserAlreadyExists);
     }
 
-    // Salvar as informações na tabela surveyUser
     const surveyUser = surveysUsersRepository.create({
       user_id: user.id,
       survey_id,
     });
 
     await surveysUsersRepository.save(surveyUser);
-    // Enviar e-mail para o usuário
     variables.id = surveyUser.id;
 
     await SendMailService.execute(email, survey.title, variables, npsPath);
@@ -68,5 +66,3 @@ class SendMailController {
     return response.json(surveyUser);
   }
 }
-
-export { SendMailController };
